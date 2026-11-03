@@ -2,9 +2,7 @@
 // Created by rkell on 3/11/2026.
 //
 
-#include "emotion_smoother.h"
-#include "CP2406_2026_Emotion_Smoother_Template/emotion_smoother.h"
-
+#include "../include/emotion_smoother.h"
 #include <algorithm>
 #include <cmath>
 #include <stdexcept>
@@ -37,4 +35,66 @@ for (std::size_t start = 0; start < audio.size(); start += stepSamples) {
     const std:: size_t end = std::min(start + stepSamples, audio.size());
 
     if (end - start < 1600) break;
+
+    std::vector<float> segment(
+            audio.begin() + static_cast<std::ptrdiff_t>(start),
+            audio.begin() + static_cast<std::ptrdiff_t>(end));
+
+        auto predictions = model.predict(std::move(segment));
+
+        if (predictions.size() < 2) {
+            throw std::runtime_error("The model must return at least two emotion classes.");
+        }
+
+        windows.push_back({
+            static_cast<float>(start) / static_cast<float>(sampleRate),
+            static_cast<float>(end) / static_cast<float>(sampleRate),
+            predictions[0],
+            predictions[1]
+        });
+
+        if (end == audio.size()) break;
+    }
+    return windows;
+}
+
+SmoothedEmotion EmotionSmoother::smoothPredictions(const std::vector<WindowPrediction>& windows) {
+    if (windows.empty()) return {"", 0.0F, false};
+
+    std::map<std::string, float> emotionScores;
+    std::map<std::string, float> topOnlyScores;
+    float totalScore = 0.0F;
+
+    for (const auto& window : windows) {
+        const float topWeight = 2.0F;
+        const float secondWeight = 1.0F;
+
+        float topScore = window.topEmotion.probability * topWeight;
+        float secondScore = window.secondEmotion.probability * secondWeight;
+
+        emotionScores[window.topEmotion.label] += topScore;
+        topOnlyScores[window.topEmotion.label] += topScore;
+        totalScore += topScore;
+
+        emotionScores[window.secondEmotion.label] += secondScore;
+        totalScore += secondScore;
+    }
+
+    if (totalScore <= 0.0F) return {"", 0.0F, false};
+
+    std::vector<std::pair<std::string, float>> sortedScores(emotionScores.begin(), emotionScores.end());
+
+    std::sort(sortedScores.begin(), sortedScores.end(), [&topOnlyScores](const auto& a, const auto& b) {
+        const float tolerance = 1e-6F;
+        if (std::abs(a.second - b.second) > tolerance) return a.second > b.second;
+
+        float topA = topOnlyScores[a.first];
+        float topB = topOnlyScores[b.first];
+        if (std::abs(topA - topB) > tolerance) return topA > topB;
+
+        return a.first < b.first;
+    });
+
+    float confidence = (sortedScores.front().second / totalScore) * 100.0F;
+    return {sortedScores.front().first, confidence, true};
 }
