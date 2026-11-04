@@ -1,4 +1,4 @@
-#include "../include/emotion_smoother.h"
+#include "emotion_smoother.h"
 #include <algorithm>
 #include <cmath>
 #include <stdexcept>
