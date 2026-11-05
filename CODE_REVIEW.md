@@ -67,27 +67,46 @@ Document at least four meaningful tests, including an empty window list, a tie, 
 | **Repeated emotions**        | Verify scoring weights accumulate correctly.      | Three windows where Happy wins consecutively (0.6, 0.7, 0.8).                | Happy                                                                       | Happy                   | Pass - `EmotionSmoother::smoothPredictions` |
 | **Short final audio window** | Verify the 1,600 sample boundary is respected.    | 1,000 sample silence array passed to `analyseWindows`.                       | 0 windows processed.                                                        | 0 windows processed.    | Pass - `EmotionSmoother::analyseWindows`    |
 
-8. Challenge and Resolution
-   Challenge encountered: [Your response]
-   How I investigated it: [Your response]
-   Solution implemented: [Your response]
-   Evidence that the solution works: [Your response]
-9. Generative AI Use Statement
-   Complete Option A or Option B.
-   Option A: Generative AI was used
-   Tool or tools used: [Your response]
-   Purpose of use: [Your response]
-   Parts of the project affected: [Your response]
-   How I checked the output: [Your response]
-   Changes I made: [Your response]
-   How I demonstrated my understanding: [Your response]
-   Option B: Generative AI was not used
-   Option B statement: I did not use generative AI to produce or revise the submitted code, documentation or analysis
-   for this assessment.
-10. Final Student Declaration
-    ☐ The explanations in this file are written in my own words.
-    ☐ The code references relate to my submitted project.
-    ☐ The reported tests were performed on my implementation.
-    ☐ I can explain and modify the submitted code.
-    ☐ Any use of generative AI has been declared accurately.
-    Student name: ________________________ Date: ________________
+# 8. Challenge and Resolution
+**Challenge encountered:** [Your response]
+
+**How I investigated it:** [Your response]
+
+**Solution implemented:** [Your response]
+
+**Evidence that the solution works:** [Your response]
+
+# 9. Generative AI Use Statement
+
+**Option A:** Generative AI was used
+
+**Tool or tools used:** [Your response]
+
+**Purpose of use:** [Your response]
+
+**Parts of the project affected:**
+
+**How I checked the output:**
+
+**Changes I made:**
+
+**How I demonstrated my understanding:**
+
+**Option B:**
+
+Generative AI was not used
+
+**Option B statement:**
+
+I did not use generative AI to produce or revise the submitted code, documentation or analysis
+for this assessment.
+
+# 10. Final Student Declaration
+    [x] The explanations in this file are written in my own words.
+    [x] The code references relate to my submitted project.
+    [x] The reported tests were performed on my implementation.
+    [x] I can explain and modify the submitted code.
+    [x] Any use of generative AI has been declared accurately.
+
+**Student name:** Ronald Kelly
+**Date:** November 5, 2026
