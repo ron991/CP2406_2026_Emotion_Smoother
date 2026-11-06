@@ -119,23 +119,37 @@ audio window.
 
 # 8. Challenge and Resolution
 
-**Challenge encountered:** [Your response]
+**Challenge encountered:** 
 
-**How I investigated it:** [Your response]
+Encountered compilation errors(`'tiedWindos' was not declared in this scope`, `'cout' in namespace 'std' does not name a type`, and `expected)`expected declaration before '}' token`) when embedding automated edge-case test blocks in `main.cpp`.
 
-**Solution implemented:** [Your response]
+**How I investigated it:** 
 
-**Evidence that the solution works:** [Your response]
+Analysed compiler diagnostics highlighting line numbers near the test function.
+
+**Solution implemented:** 
+
+Fixed a missing closing brace and semicolon (`};`) on the `tiedWindows` vector.
+
+**Evidence that the solution works:** 
+
+This project builds and compiles without warnings or errors.
 
 # 9. Generative AI Use Statement
 
 **Option A:** Generative AI was used
 
-**Tool or tools used:** [Your response]
+**Tool or tools used:** 
 
-**Purpose of use:** [Your response]
+Google Gemini and GitHub Copilot
+
+**Purpose of use:** 
+
+Debugging GCC/MinGW compiler syntax errors, Analysing results of output project , Converting and editing files to work with Windows set up (Most files were suited for Linux based on dependencies).
 
 **Parts of the project affected:**
+
+`main.cpp` (menu loop structuring and test harness setup), `EmotionSmoother.cpp` (container efficiency refactoring), `CODE_REVIEW.md` , `emotion_smoother.h` and `emotion_smoother.cpp`.
 
 **How I checked the output:**
 
