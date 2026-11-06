@@ -119,19 +119,21 @@ audio window.
 
 # 8. Challenge and Resolution
 
-**Challenge encountered:** 
+**Challenge encountered:**
 
-Encountered compilation errors(`'tiedWindos' was not declared in this scope`, `'cout' in namespace 'std' does not name a type`, and `expected)`expected declaration before '}' token`) when embedding automated edge-case test blocks in `main.cpp`.
+Encountered compilation errors (`'tiedWindos' was not declared in this scope`,
+`'cout' in namespace 'std' does not name a type`, and `expected)`expected declaration before '}' token
+`) when embedding automated edge-case test blocks in `main.cpp`.
 
-**How I investigated it:** 
+**How I investigated it:**
 
 Analysed compiler diagnostics highlighting line numbers near the test function.
 
-**Solution implemented:** 
+**Solution implemented:**
 
 Fixed a missing closing brace and semicolon (`};`) on the `tiedWindows` vector.
 
-**Evidence that the solution works:** 
+**Evidence that the solution works:**
 
 This project builds and compiles without warnings or errors.
 
@@ -139,32 +141,36 @@ This project builds and compiles without warnings or errors.
 
 **Option A:** Generative AI was used
 
-**Tool or tools used:** 
+**Tool or tools used:**
 
 Google Gemini and GitHub Copilot
 
-**Purpose of use:** 
+**Purpose of use:**
 
-Debugging GCC/MinGW compiler syntax errors, Analysing results of output project , Converting and editing files to work with Windows set up (Most files were suited for Linux based on dependencies).
+Debugging GCC/MinGW compiler syntax errors, Analysing results of output project , Converting and editing files to work
+with Windows set up (Most files were suited for Linux based on dependencies).
 
 **Parts of the project affected:**
 
-`main.cpp` (menu loop structuring and test harness setup), `EmotionSmoother.cpp` (container efficiency refactoring), `CODE_REVIEW.md` , `emotion_smoother.h` and `emotion_smoother.cpp`.
+`main.cpp` (menu loop structuring and test harness setup), `EmotionSmoother.cpp` (container efficiency refactoring),
+`CODE_REVIEW.md` , `emotion_smoother.h` and `emotion_smoother.cpp`.
 
 **How I checked the output:**
 
+Compiled all code changes locally using MinGW/Cmake in JetBrains CLion. Verified that edge-case assertions passed and
+that the interactive menu operated without leaks or crashes.
+
 **Changes I made:**
+
+I took the general suggestions and customised them to fit the exact $WindowPrediction$ and $SmoothedEmotion$ structs
+required by the assessment.
 
 **How I demonstrated my understanding:**
 
-**Option B:**
+I can explain how passing by value versus reference works in C++, why $unordered_map$ lookups are faster and walk
+through all the edge-case tests during my video recording.
 
-Generative AI was not used
 
-**Option B statement:**
-
-I did not use generative AI to produce or revise the submitted code, documentation or analysis
-for this assessment.
 
 # 10. Final Student Declaration
 
