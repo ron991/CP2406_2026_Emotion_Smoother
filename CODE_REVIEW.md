@@ -33,8 +33,8 @@ emotions?
 **Your response:**
 The raw output logits from the ONNX machine learning model reflect label order rather than confidence magnitude. Sorting
 the resulting `Prediction` structs in descending order of probability places the highest-confidence emotion strictly at
-index `0` (`topEmotion`) and the second-highest at index `1` ("sceond
-Emotion                                                               )
+index `0` (`topEmotion`) and the second-highest at index `1` (`second
+Emotion`).
 
 # 4. Accumulating Emotion Scores
 
@@ -61,9 +61,15 @@ File: `EmotionSmoother.h` Function: `struct SmoothedEmotion` Relevant line or fr
 
 **Question:** Why should EmotionSmoother be separate from EmotionModel and main.cpp?
 
-**Responsibility of main.cpp:** [Your response]
+**Responsibility of main.cpp:**
 
-**Responsibility of EmotionModel:** [Your response]
+Acts as the application coordinator. It manages the CLI user menu, collects input, coordinates audio acquisition
+(microphone recording via `AudioRecorder` or WAV file loading), handles console streat error recovery via
+`clearInput()`, and invokes window analysis loops.
+
+**Responsibility of EmotionModel:** 
+
+Encapsulates ONNX Runtime interactions and neural network execution. It loads asset
 
 **Responsibility of EmotionSmoother:** [Your response]
 
