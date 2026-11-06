@@ -67,24 +67,42 @@ Acts as the application coordinator. It manages the CLI user menu, collects inpu
 (microphone recording via `AudioRecorder` or WAV file loading), handles console streat error recovery via
 `clearInput()`, and invokes window analysis loops.
 
-**Responsibility of EmotionModel:** 
+**Responsibility of EmotionModel:**
 
-Encapsulates ONNX Runtime interactions and neural network execution. It loads asset
+Encapsulates ONNX Runtime interactions and neural network execution. It loads asset files (`mode.onnx`, `labels.txt`),
+normalises raw floating-point audio waveforms and returns label-probability pairs in example Happy and Sad.
 
-**Responsibility of EmotionSmoother:** [Your response]
+**Responsibility of EmotionSmoother:**
 
-**Code evidence:** Relevant files/classes/functions: ___
+Encapsulates time-frame segmentation and statistical smoothing algorithms. It divides raw audio vectors into valid
+sample windows (1600 samples), generates `WindowPrediction`, applies scoring formula's and computes the final winning
+emotion and confidence percentage.
+
+**Code evidence:**
+
+`main.cpp` (`main`, `runAnalysis`), `EmotionModel.h` / `EmotionModel.cpp` (`EmotionModel::predict`),
+`EmotionSmoother.h` / `EmotionSmoother.cpp` (`EmotionSmoother::analyseWindows`, `EmotionSmoother::smoothPredictions`)
 
 # 6. Refactoring Summary
 
 **Change 1:**
-What changed? Where? Why was it useful?
 
-**Change 2:** What changed?
-Where? Why was it useful?
+What changed? Extracted the magic number `1600` into a named `constexpr std::size_t MIN_WINDOW_SAMPLES = 1600` constant
+in `EmotionSmoother.h`.  
+Why was it useful? Eliminates code duplication, prevents boundary logic drift, and enforces central configuration for
+short-window safety checks.
+
+**Change 2:**
+What changed? Promoted scoring weight multipliers (`topWeight = 2.0F`, `secondWeight = 1.0F`) to configurable
+class/struct constants inside `EmotionSmoother.h`.  
+Why was it useful? Decouples algorithm tuning parameters from local loop logic, making future weight adjustments
+straightforward without modifying implementation loops.
 
 **Change 3:**
-What changed? Where? Why was it useful?
+What changed? Refactored score accumulation storage from `std::map<std::string, float>` to
+`std::unordered_map<std::string, float>` inside `EmotionSmoother::smoothPredictions`.  
+Why was it useful? Improved runtime execution efficiency by replacing $O (\log n)$ tree traversal overhead with $O (1)$
+hash table lookups during window tallying.
 
 # 7. Testing Evidence
 
